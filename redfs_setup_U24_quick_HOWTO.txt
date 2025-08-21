@@ -1,0 +1,70 @@
+1) Set Proxy
+
+set_proxies
+
+2) Verify any prior install
+
+$ dpkg -l | egrep -i 'redcli|red-client'
+
+3) Install the packages
+
+sudo apt-get update
+sudo apt-get install -y ~/repo/infinia/deb/2.2.41/red*.deb
+
+4) Verify post install
+$ dpkg -l | egrep -i 'redcli|red-client'
+
+5) Setup and Mount redfs in client node
+
+$ lsmod | grep redfs
+$ sudo modprobe redfs
+$ lsmod | grep redfs
+redfs                 245760  0
+
+$ sudo mkdir -p /redfs
+$ sudo chmod 0777 /redfs
+$ mount | grep redfs
+$ sudo usermod -a -G red root
+
+$ export REDCLI_SERVER="https://192.168.2.201/redapi/v1"
+$ redcli user login realm_admin --password DDN1nfini@SNL!
+3:20PM INF User "realm_admin" logged in successfully.
+
+$ redcli client setup -t red
+3:20PM INF Auto Selecting cluster: cluster1
+3:20PM INF Auto Selecting subtenant: red
+3:20PM WRN The following network options will not be set because of permissions, run this command as root if they are necessary, or ignore this message: 
+            net.ipv4.tcp_rmem=4096 131072 8388608
+            net.ipv4.tcp_wmem=4096 131072 8388608
+            net.core.wmem_max=8388608
+            net.core.rmem_max=8388608
+3:20PM INF Certificates and keys saved at "~/.config/red/certs". Be careful!
+3:20PM INF RED client environment setup complete, Hint: run 'source /home/krajara/.config/red/redrc' to set RED environment.
+
+$ source /home/krajara/.config/red/redrc
+3:21PM INF Auto Selecting cluster: cluster1
+$ echo $RED_USER
+529746be-7ba6-4d18-a854-7a4f340e0852
+
+$ sudo -E redfs -D redfs /redfs
+Setting default RED_FS_COREMASK coremask to [0-1,6-7,12-13,18-19]
+Setting RED_CLIENT_NET_CPUSET to [0,6,12,18]
+/usr/bin/../red_sysadmin_events.json:-1 JSON parse error: unable to open /usr/bin/../red_sysadmin_events.json: No such file or directory
+2025-08-20 15:23:45.124565000 INFO enabled json sysadmin events
+{"dropped" : 0, "tod":1755703425, "tod_usec":124565, "source":"00000000-0000-0000-0000-000000000000", "sev":6, "fid":"03edf5d20e291734", "args":[]}
+2025-08-20 15:23:45.125379000 INFO redfs hostuuid 00008056-434f-4546-3343-4e3132303432 version 2.2.43 build custom-250819.91aa879466 starting up
+{"dropped" : 0, "tod":1755703425, "tod_usec":125379, "source":"00000000-0000-0000-0000-000000000000", "sev":6, "fid":"0821386c611cc4c8", "args":["redfs","00008056-434f-4546-3343-4e3132303432","2.2.43","custom-250819.91aa879466"]}
+redfs: RED client running in redfs: interrupts enabled
+redfs_client_init: tenant = 'red/red' dataset = 'redfs'
+Further logs can be found here : /var/log/red/client/redfs/redfs.log
+redfs: exiting with status 0
+
+$ ls /redfs
+$ mount | grep redfs
+cluster1/red/red/redfs on /redfs type redfs.redfs (rw,nosuid,nodev,relatime,user_id=0,group_id=0,default_permissions,allow_other)
+
+8) Verify /redfs
+
+$ echo "Greetings from `hostname` at `date`" >> /redfs/greetings.txt
+$ cat /redfs/greetings.txt 
+
