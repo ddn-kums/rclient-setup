@@ -19,7 +19,7 @@ export RELEASE_TYPE="" && \
 export TARGET_ARCH="$(dpkg --print-architecture)" && \
 export REL_DIST_PATH="ubuntu/24.04" && \
 export REL_PKG_URL="${BASE_PKG_URL}/releases${RELEASE_TYPE}/${REL_DIST_PATH}" && \
-export RED_VER="2.2.43"
+export RED_VER="2.3.0-rc5"
 
 mkdir -p $REPO_DIR/$RED_VER
 sleep $SLEEPT
@@ -62,7 +62,7 @@ export RELEASE_TYPE="" && \
 export TARGET_ARCH="all" && \
 export REL_DIST_PATH="ubuntu/24.04" && \
 export REL_PKG_URL="${BASE_PKG_URL}/releases${RELEASE_TYPE}/${REL_DIST_PATH}" && \
-export DKMS_VER="0.0.12"
+export DKMS_VER="2.3.0-rc5"
 pkg=$CLIENT_DKMS_PKG
 	
 echo "Downloading Client DKMS Package: $pkg at `date`" 2>&1 | tee -a $CMD_OUTPUT_FILE
