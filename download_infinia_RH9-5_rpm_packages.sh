@@ -18,7 +18,7 @@ export RELEASE_TYPE="" && \
 export TARGET_ARCH="x86_64" && \
 export REL_DIST_PATH="rockylinux/el9/rpm" && \
 export REL_PKG_URL="${BASE_PKG_URL}/releases${RELEASE_TYPE}/${REL_DIST_PATH}" && \
-export RED_VER="2.3.0-rc5"
+export RED_VER="2.3.0-rcx.12"
 export OS_VER="el9"
 
 mkdir -p $REPO_DIR/$RED_VER
@@ -47,7 +47,7 @@ export RELEASE_TYPE="" && \
 export TARGET_ARCH="noarch" && \
 export REL_DIST_PATH="rockylinux/el9/rpm" && \
 export REL_PKG_URL="${BASE_PKG_URL}/releases${RELEASE_TYPE}/${REL_DIST_PATH}" && \
-export DKMS_VER="2.3.0-rc5"
+export DKMS_VER="2.3.0-rcx.12"
 export OS_VER="el9"
 pkg=$CLIENT_DKMS_PKG
 
